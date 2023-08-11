@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { list, details } from '../../mock/fund_list';
+import { list, details } from '../mock/fund_list';
 
 @Injectable()
 export class FundService {

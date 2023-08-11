@@ -3,14 +3,15 @@ import { FundService } from './fund.service';
 
 @Controller('/fund')
 export class FundController {
+  constructor(private fundService: FundService) {}
   @Get('/list')
   findAll() {
-    return new FundService().getFundList();
+    return this.fundService.getFundList();
   }
 
   @Get(`/detail/:id`)
-  findDetail(@Param() params) {
-    console.log(params.id);
-    return new FundService().getFundDetail(params.id);
+  findDetail(@Param('id') id) {
+    console.log(id);
+    return new FundService().getFundDetail(id);
   }
 }
