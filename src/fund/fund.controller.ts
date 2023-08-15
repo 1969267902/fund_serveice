@@ -1,4 +1,13 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  Res,
+} from '@nestjs/common';
+import { Response } from 'express';
 import { FundService } from './fund.service';
 
 @Controller('/fund')
@@ -11,7 +20,15 @@ export class FundController {
 
   @Get(`/detail/:id`)
   findDetail(@Param('id') id) {
-    console.log(id);
-    return new FundService().getFundDetail(id);
+    return this.fundService.getFundDetail(id);
+  }
+
+  @Post('/create')
+  create(@Body() body) {
+    this.fundService.createFund(body);
+    return {
+      status: HttpStatus.OK,
+      message: '添加成功',
+    };
   }
 }

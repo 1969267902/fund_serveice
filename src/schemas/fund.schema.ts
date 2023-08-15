@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type FundDocument = Fund & Document;
+export type FundDocument = FundList & Document;
 
 @Schema()
-export class Fund extends Document {
+export class FundList extends Document {
   @Prop()
   name: string;
 
@@ -12,4 +12,4 @@ export class Fund extends Document {
   id: string;
 }
 
-export const FundSchema = SchemaFactory.createForClass(Fund);
+export const FundSchema = SchemaFactory.createForClass(FundList);
