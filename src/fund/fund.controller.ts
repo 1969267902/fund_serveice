@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpStatus,
-  Param,
-  Post,
-  Res,
-} from '@nestjs/common';
-import { Response } from 'express';
+import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
 import { FundService } from './fund.service';
 
 @Controller('/fund')
@@ -24,11 +15,14 @@ export class FundController {
   }
 
   @Post('/create')
-  create(@Body() body) {
-    this.fundService.createFund(body);
-    return {
-      status: HttpStatus.OK,
-      message: '添加成功',
-    };
+  create(@Body() body, @Res() res) {
+    this.fundService.createFund(body, res);
+  }
+
+  @Post('/add/record')
+  addRecord(@Body() body, @Res() res) {
+    console.log(body);
+    return {};
+    this.fundService.addFundRecord(body, res);
   }
 }
