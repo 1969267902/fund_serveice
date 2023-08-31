@@ -19,6 +19,9 @@ export class Record extends Document {
 
   @Prop()
   status: boolean;
+
+  @Prop()
+  id: string;
 }
 
 export const RecordSchema = SchemaFactory.createForClass(Record);

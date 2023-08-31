@@ -13,8 +13,13 @@ export class FundService {
   ) {}
 
   async getFundList() {
-    // 获取基金名称
+    // 查询基金名称列表
     return await this.fundModel.find({});
+  }
+
+  async findFund(id) {
+    // 按条件查找基金
+    return await this.fundModel.find({ id }).exec();
   }
 
   getFundDetail(id: string) {
@@ -24,47 +29,23 @@ export class FundService {
 
   async createFund(data, res) {
     // 新增基金名称
-    try {
-      const result = await this.findFund(data.id);
-
-      if (result.length === 0) {
-        const CreateModel = new this.fundModel(data);
-        CreateModel.save();
-        res.status(HttpStatus.OK).send({
-          msg: '新增成功',
-        });
-      } else {
-        res.status(HttpStatus.BAD_REQUEST).send({ msg: '已存在' });
-      }
-    } catch (err) {
-      throw new HttpException(
-        {
-          status: HttpStatus.FORBIDDEN,
-          error: 'This is a custom message',
-        },
-        HttpStatus.FORBIDDEN
-      );
-    }
-  }
-
-  async findFund(id) {
-    // 查找基金
-    return await this.fundModel.find({ id }).exec();
-  }
-
-  addFundRecord(data, res) {
-    console.log(data);
-    try {
-      const RecordModel = new this.recordModel(data);
-
-      RecordModel.save();
+    const result = await this.findFund(data.id);
+    if (result.length === 0) {
+      const CreateModel = new this.fundModel(data);
+      CreateModel.save();
       res.status(HttpStatus.OK).send({
         msg: '新增成功',
       });
-    } catch (err) {
-      res.status(HttpStatus.BAD_REQUEST).send({
-        msg: err,
-      });
     }
+    res.status(HttpStatus.BAD_REQUEST).send({ msg: '已存在' });
+  }
+
+  addRecord(data, res) {
+    // 创建基金买卖记录
+    const RecordModel = new this.recordModel(data);
+    RecordModel.save();
+    res.status(HttpStatus.OK).send({
+      msg: '新增成功',
+    });
   }
 }
