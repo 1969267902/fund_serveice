@@ -1,7 +1,6 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { list, details } from '../mock/fund_list';
 import { FundDocument } from 'src/schemas/fund/fund.schema';
 import { RecordDocument } from 'src/schemas/fund/add_record.schema';
 
@@ -22,9 +21,9 @@ export class FundService {
     return await this.fundModel.find({ id }).exec();
   }
 
-  getFundDetail(id: string) {
+  async getFundDetail(id: string) {
     // 获取基金记录
-    return details;
+    return await this.recordModel.find({ id });
   }
 
   async createFund(data, res) {
